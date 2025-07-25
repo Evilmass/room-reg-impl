@@ -3,7 +3,7 @@ name: Build Docker Image
 on:
   push:
     branches:
-      - main  # 触发分支，可自定义
+      - master  # 触发分支，可自定义
 
 jobs:
   build:
