@@ -1,0 +1,27 @@
+name: Build Docker Image
+
+on:
+  push:
+    branches:
+      - main  # 触发分支，可自定义
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: Build Docker image
+        run: |
+          docker build -t room-reg-impl .
+          docker save room-reg-impl | gzip > room-reg-impl-image.tar.gz
+
+      - name: Upload image artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: docker-image
+          path: room-reg-impl-image.tar.gz
